@@ -13,7 +13,12 @@ var NewWidgetWindowController = function($scope, $widgetPopupService, $widgetsSe
                 textAlign: 'widget-align-left',
                 dropShadow: false,
                 inverted: false,
-                showDimmerLoading: true
+                showDimmerLoading: true,
+                chart: {
+                    show: false,
+                    type: "GAUGE", // "GAUGE", "TIME_SERIES"
+                    timeSeriesSamples: 10
+                }
             },
             layout: {
                 column: 0,

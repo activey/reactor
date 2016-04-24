@@ -1,4 +1,4 @@
-var ReactorBoardController = function($scope, $widgetsService, $widgetsService) {
+var ReactorBoardController = function($scope, $widgetsService) {
 
 	$scope.gristerOptions = {
         columns: 12,
@@ -34,19 +34,6 @@ var ReactorBoardController = function($scope, $widgetsService, $widgetsService) 
         }
     };
 
-    var initWidgetAddedListener = function($scope, $widgetsService) {
-    	$widgetsService.onWidgetAdded(function($newWidget) {
-    		$scope.addWidget($newWidget);
-            $scope.$apply();
-    	});
-    };
-
-    var initWidgetRemovedListener = function($scope, $widgetsService) {
-        $widgetsService.onWidgetRemoved(function($widgetToRemove) {
-            $scope.removeWidget($widgetToRemove);
-        });
-    };
-
     function copyWidgetProperties($widget, $widgetDataToCopy) {
     	$widget.layout = $widgetDataToCopy.layout;
     	$widget.visual = $widgetDataToCopy.visual;
@@ -61,12 +48,25 @@ var ReactorBoardController = function($scope, $widgetsService, $widgetsService) 
 
     var initWidgetChangedListener = function($scope, $widgetsService) {
     	$widgetsService.onWidgetChanged(function($updatedWidget) {
-    		var widget = $scope.widgets.filter(FILTER_WIDGET_ID_MATCHES($updatedWidget.id))[0];
+            var widget = $scope.widgets.filter(FILTER_WIDGET_ID_MATCHES($updatedWidget.id))[0];
     		if (widget) {
     			copyWidgetProperties(widget, $updatedWidget);
                 $scope.$apply();
     		}
     	});
+    };
+
+    var initWidgetAddedListener = function($scope, $widgetsService) {
+        $widgetsService.onWidgetAdded(function($newWidget) {
+            $scope.addWidget($newWidget);
+            $scope.$apply();
+        });
+    };
+
+    var initWidgetRemovedListener = function($scope, $widgetsService) {
+        $widgetsService.onWidgetRemoved(function($widgetToRemove) {
+            $scope.removeWidget($widgetToRemove);
+        });
     };
 
     initWidgetChangedListener($scope, $widgetsService);

@@ -6,6 +6,7 @@ import org.reactor.response.renderer.ReactorResponseRenderer;
 public abstract class ListReactorResponse<T> implements ReactorResponse {
 
     private static final String HEADER_TEMPLATE_EMPTY = "";
+    private static final String LIST_LINE_ID_REACTORS_LIST = "reactors";
 
     private final String headerTemplate;
     private final Object[] variables;
@@ -28,7 +29,7 @@ public abstract class ListReactorResponse<T> implements ReactorResponse {
 
         int index = 0;
         for (T listElement : listElements) {
-            responseRenderer.renderListLine(index, listElement, formatter);
+            responseRenderer.renderListLine(LIST_LINE_ID_REACTORS_LIST, index, listElement, formatter);
             index++;
         }
     }

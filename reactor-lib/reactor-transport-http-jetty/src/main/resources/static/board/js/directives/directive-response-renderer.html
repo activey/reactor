@@ -1,39 +1,37 @@
-<div data-ng-repeat="(key, value) in content">
-    <div data-ng-switch="key">
+<div data-ng-repeat="responseLine in content.response">
+    <div data-ng-switch="responseLine.type">
 
-        <div data-ng-switch-when="header" class="ui header">
-            <div class="content nowrap ng-class:visual.fontSize">
-                {{ value }}
-            </div>
+        <div data-ng-switch-when="header" class="ui header value">
+            <div class="content nowrap ng-class:visual.fontSize">{{ responseLine.value }}</div>
         </div>
 
-        <div class="ui inverted relaxed divided list" data-ng-switch-when="list">
-            <div class="value item ng-class:visual.fontSize" data-ng-repeat="element in value">
-                <div class="content">
-                    {{ element }}
+        <div data-ng-switch-when="list" class="ui inverted relaxed divided list value">
+            <div class="item ng-class:visual.fontSize" data-ng-repeat="element in responseLine.value">
+                <div class="content value">
+                    {{ value }}
                 </div>
             </div>
         </div>
 
         <div data-ng-switch-when="double" class="ui statistic">
             <div class="value ng-class:visual.fontSize">
-                {{ value }}
+                {{ responseLine.value }}
             </div>
         </div>
 
         <div data-ng-switch-when="long" class="ui statistic">
             <div class="value ng-class:visual.fontSize">
-                {{ value }}
+                {{ responseLine.value }}
             </div>
         </div>
 
-        <p data-ng-switch-when="text" class="nowrap value ng-class:visual.fontSize">{{ value }}</p>
+        <p data-ng-switch-when="text" class="nowrap value ng-class:visual.fontSize">{{ responseLine.value }}</p>
 
         <div data-ng-switch-default class="ui header">
             <div class="value ng-class:visual.fontSize">
                 {{ key }}
                 <div class="sub header">
-                    {{ value }}
+                    {{ value.content }}
                 </div>
             </div>
         </div>

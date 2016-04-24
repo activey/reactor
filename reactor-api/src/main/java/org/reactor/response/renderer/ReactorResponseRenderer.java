@@ -12,8 +12,6 @@ public interface ReactorResponseRenderer {
 
     <T> void renderListLine(String lineId, int index, T listElement, ListElementFormatter<T> formatter);
 
-    <T> void renderListLine(int index, T listElement, ListElementFormatter<T> formatter);
-
     void renderHeadLine(String headerTemplateToBeRendered, Object... templateParameters);
 
     void renderDoubleLine(String lineId, double doubleValue);

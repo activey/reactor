@@ -1,4 +1,4 @@
-var WidgetController = function($scope, $widgetPopupService, $widgetContentRefreshService) {
+var WidgetController = function($scope, $widgetPopupService, $widgetContentRefreshService, $widgetsChartsService) {
     
     $scope.widgetContent = "";
     $scope.processing = true;
@@ -28,7 +28,8 @@ var WidgetController = function($scope, $widgetPopupService, $widgetContentRefre
         return decoration;
     };
 
-    var bindContentRefreshEvents = function($scope) {
+
+    var bindWidgetContentChangeListener = function($scope) {
         $widgetContentRefreshService.addDataRefreshListener($scope.widget, {
             onDataRefreshStarted: function() {
                 $scope.$apply(function() {
@@ -36,17 +37,32 @@ var WidgetController = function($scope, $widgetPopupService, $widgetContentRefre
                 });
             },
             onDataRefreshFinished: function($widgetData) {
-                console.log('refresing widget: ' + $scope.widget.id)
                 $scope.widgetContent = $widgetData;
-                $scope.processing = false;
                 $scope.error = false;
+
+                $scope.processing = false;
             },
             onDataRefreshFailed: function() {
                 $scope.error = true;
             }
         });
     };
-    bindContentRefreshEvents($scope);
+
+    var bindWidgetChartValueUpdateListener = function($scope) {
+        $widgetContentRefreshService.addDataRefreshListener($scope.widget, {
+            onDataRefreshFinished: function($widgetData) {
+                if (!$scope.widget.visual.chart.show) {
+                    return;
+                }
+                $widgetsChartsService.updatedWidgetData($scope.widget.id, $widgetData, $scope.widget.visual.chart);
+            },
+            onDataRefreshStarted: function() {},
+            onDataRefreshFailed: function() {}
+        });
+    };
+
+    bindWidgetContentChangeListener($scope);
+    bindWidgetChartValueUpdateListener($scope);
 };
 
 var WidgetLinker = function($scope, $element, $attrs) {

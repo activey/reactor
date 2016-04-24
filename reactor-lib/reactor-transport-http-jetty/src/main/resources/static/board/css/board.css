@@ -112,6 +112,10 @@ body {
           Widget visuals
 -------------------------------*/
 
+.widget-content {
+  height: 90%;
+}
+
 .widget-align-left .value {
     text-align: left !important;
 }
@@ -125,39 +129,39 @@ body {
 }
 
 .widget-font-default {
-  font-size: initial;
+  font-size: initial !important;
 }
 
 .widget-font-xx-small {
-  font-size: 30%;
+  font-size: 30% !important;
 }
 
 .widget-font-x-small {
-  font-size: 50%;
+  font-size: 50% !important;
 }
 
 .widget-font-smaller {
-  font-size: 70%;
+  font-size: 70% !important;
 }
 
 .widget-font-small {
-  font-size: 80%;
+  font-size: 80% !important;
 }
 
 .widget-font-large {
-  font-size: 200%;
+  font-size: 200% !important;
 }
 
 .widget-font-larger {
-  font-size: 300%;
+  font-size: 300% !important;
 }
 
 .widget-font-x-large {
-  font-size: 400%;
+  font-size: 400% !important;
 }
 
 .widget-font-xx-large {
-  font-size: 500%;
+  font-size: 500% !important;
 }
 
 .widget .ui.header {

@@ -37,8 +37,8 @@ var WidgetsService = function($widgetsStorageService) {
 
     this.notifyWidgetUpdated = function($updatedWidget) {
         for (var callbackIndex in this.onWidgetChangedCallbacks) {
-            var onWidgetLayoutChangedCallback = this.onWidgetChangedCallbacks[callbackIndex];
-            onWidgetLayoutChangedCallback($updatedWidget);
+            var onWidgetChangedCallback = this.onWidgetChangedCallbacks[callbackIndex];
+            onWidgetChangedCallback($updatedWidget);
         }
     };
 

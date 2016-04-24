@@ -45,7 +45,7 @@
 
         <!-- Common libraries -->
         <commons-io.version>2.4</commons-io.version>
-        <org.json.version>20140107</org.json.version>
+        <org.json.version>LATEST</org.json.version>
 
         <!-- Musties -->
         <com.google.guava.version>16.0</com.google.guava.version>
