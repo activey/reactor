@@ -1,6 +1,8 @@
 var WidgetController = function($scope, $widgetPopupService, $widgetContentRefreshService, $widgetsChartsService) {
     
-    $scope.widgetContent = "";
+    $scope.widgetContent = {
+        response: []
+    };
     $scope.processing = true;
     $scope.error = false;
 
@@ -19,7 +21,7 @@ var WidgetController = function($scope, $widgetPopupService, $widgetContentRefre
     $scope.getWidgetDecoration = function() {
         var decoration = $scope.widget.visual.colorSettings.staticModel.color;
         if ($scope.widget.visual.colorSettings.dynamic) {
-            decoration = evalWidgetDynamicColor();
+            decoration = evalWidgetDynamicColor($scope);
         }
         if ($scope.widget.visual.colorSettings.inverted === true) {
             decoration = decoration + ' inverted';
@@ -31,10 +33,14 @@ var WidgetController = function($scope, $widgetPopupService, $widgetContentRefre
         return decoration;
     };
 
-    var evalWidgetDynamicColor = function() {
-        var response = $scope.widgetContent;
-        var widgetDynamicColorModel = $scope.widget.visual.colorSettings.dynamicModel;
+    var evalWidgetDynamicColor = function($scope) {
+        // creating local variables for each response line
+        for (var $lineIndex in $scope.widgetContent.response) {
+            var responseLine = $scope.widgetContent.response[$lineIndex];
+            eval('var ' + responseLine.id + ' = ' + responseLine.value + ';');
+        }
 
+        var widgetDynamicColorModel = $scope.widget.visual.colorSettings.dynamicModel;
         switch (true) {
             case eval(widgetDynamicColorModel.blue): return 'blue';
             case eval(widgetDynamicColorModel.orange): return 'orange';
@@ -65,20 +71,23 @@ var WidgetController = function($scope, $widgetPopupService, $widgetContentRefre
     };
 
     var bindWidgetChartValueUpdateListener = function($scope) {
-        $widgetContentRefreshService.addDataRefreshListener($scope.widget, {
-            onDataRefreshFinished: function($widgetData) {
-                if (!$scope.widget.visual.chart.show) {
-                    return;
-                }
-                $widgetsChartsService.updatedWidgetData($scope.widget.id, $widgetData, $scope.widget.visual.chart);
-            },
-            onDataRefreshStarted: function() {},
-            onDataRefreshFailed: function() {}
+        $scope.$watch('widgetContent', function($newWidgetContent, bleble){
+            $widgetsChartsService.updateWidgetData($scope.widget.id, $newWidgetContent, $scope.widget.chart);
+        }, true);
+    };
+
+    var bindWidgetResizeListeners = function($scope) {
+        $scope.$on('gridster-item-transition-end', function(item) {
+            $widgetsChartsService.refreshWidgetChart($scope.widget.id);
+        });
+        $scope.$on('gridster-item-resized', function(item) {
+            $widgetsChartsService.refreshWidgetChart($scope.widget.id);
         });
     };
 
     bindWidgetContentChangeListener($scope);
     bindWidgetChartValueUpdateListener($scope);
+    bindWidgetResizeListeners($scope);
 };
 
 var WidgetLinker = function($scope, $element, $attrs) {

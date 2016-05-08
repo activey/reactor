@@ -89,25 +89,17 @@
             <artifactId>fest-assert</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.reactor</groupId>
+            <artifactId>reactor-transport-http-jetty</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.reactor</groupId>
+            <artifactId>reactor-system</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>with-libs</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.reactor</groupId>
-                    <artifactId>reactor-transport-http-jetty</artifactId>
-                    <version>0.0.1</version>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.reactor</groupId>
-                    <artifactId>reactor-system</artifactId>
-                    <version>0.0.1</version>
-                </dependency>
-            </dependencies>
-        </profile>
-
-    </profiles>
 </project>

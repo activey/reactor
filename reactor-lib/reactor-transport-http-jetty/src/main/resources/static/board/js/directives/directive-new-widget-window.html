@@ -8,9 +8,24 @@
 <div class="ui top attached pointing secondary menu">
     <a class="active item" data-tab="basic-settings">Basic settings</a>
     <a class="item" data-tab="color-settings">Widget color</a>
+    <a class="item" data-tab="chart-settings">Chart settings</a>
 </div>
 
 <div class="ui bottom attached active tab segment" data-tab="basic-settings">
+    <div class="ui form">
+        <div class="inline fields widget-color-model">
+            <div class="ui input">
+                <div class="ui toggle checkbox">
+                    <input type="checkbox" id="showWidgetContent"
+                           data-ng-model="widgetData.visual.showContent">
+                    <label for="showWidgetContent" data-ng-show="widgetData.visual.showContent">Show content</label>
+                    <label for="showWidgetContent" data-ng-hide="widgetData.visual.showContent">Hide content</label>
+                </div>
+                <label></label>
+            </div>
+        </div>
+    </div>
+
     <div class="ui two column grid">
         <div class="column">
             <div class="ui segment">
@@ -27,19 +42,17 @@
                         </div>
                     </div>
 
-                    <div class="fields">
-                        <div class="sixteen wide field">
-                            <label>Font size:</label>
-                            <div class="ui fluid dropdown selection" data-ng-model="widgetData.visual.fontSize">
-                                <div class="default text">Default</div>
-                                <i class="dropdown icon"></i>
-                                <div class="menu">
-                                    <div class="item" data-value="">Default</div>
-                                    <div class="item" data-value="widget-font-xx-small">Mini</div>
-                                    <div class="item" data-value="widget-font-smaller">Small</div>
-                                    <div class="item" data-value="widget-font-larger">Large</div>
-                                    <div class="item" data-value="widget-font-xx-large">Huge</div>
-                                </div>
+                    <div class="eight wide field" data-ng-show="widgetData.visual.showContent">
+                        <label>Font size:</label>
+                        <div class="ui fluid dropdown selection" data-ng-model="widgetData.visual.fontSize">
+                            <div class="default text">Default</div>
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <div class="item" data-value="">Default</div>
+                                <div class="item" data-value="widget-font-xx-small">Mini</div>
+                                <div class="item" data-value="widget-font-smaller">Small</div>
+                                <div class="item" data-value="widget-font-larger">Large</div>
+                                <div class="item" data-value="widget-font-xx-large">Huge</div>
                             </div>
                         </div>
                     </div>
@@ -70,7 +83,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="fields">
+                    <div class="fields" data-ng-show="widgetData.visual.showContent">
                         <div class="sixteen wide field">
                             <label>Text alignment:</label>
 
@@ -143,7 +156,6 @@
 </div>
 
 <div class="ui bottom attached tab segment" data-tab="color-settings">
-
     <div class="ui form">
         <div class="inline fields widget-color-model">
             <div class="ui input">
@@ -163,26 +175,22 @@
     <div class="ui segment" data-ng-hide="widgetData.visual.colorSettings.dynamic">
         <div class="ui top attached label">Static color settings</div>
         <div class="ui form">
-            <div class="ui one column grid">
-                <div class="column">
-                    <div class="inline fields">
-                        <div class="sixteen wide field">
-                            <label>Widget color:</label>
+            <div class="inline fields">
+                <div class="sixteen wide field">
+                    <label>Widget color:</label>
 
-                            <div class="ui dropdown selection"
-                                 data-ng-model="widgetData.visual.colorSettings.staticModel.color">
-                                <div class="default text">Default</div>
-                                <i class="dropdown icon"></i>
-                                <div class="menu">
-                                    <div class="item" data-value="">Default</div>
-                                    <div class="item" data-value="green">Green</div>
-                                    <div class="item" data-value="red">Red</div>
-                                    <div class="item" data-value="blue">Blue</div>
-                                    <div class="item" data-value="purple">Purple</div>
-                                    <div class="item" data-value="orange">Orange</div>
-                                    <div class="item" data-value="teal">Teal</div>
-                                </div>
-                            </div>
+                    <div class="ui dropdown selection"
+                         data-ng-model="widgetData.visual.colorSettings.staticModel.color">
+                        <div class="default text">Default</div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <div class="item" data-value="">Default</div>
+                            <div class="item" data-value="green">Green</div>
+                            <div class="item" data-value="red">Red</div>
+                            <div class="item" data-value="blue">Blue</div>
+                            <div class="item" data-value="purple">Purple</div>
+                            <div class="item" data-value="orange">Orange</div>
+                            <div class="item" data-value="teal">Teal</div>
                         </div>
                     </div>
                 </div>
@@ -259,7 +267,88 @@
             </div>
         </div>
     </div>
+</div>
 
+<div class="ui bottom attached tab segment" data-tab="chart-settings">
+    <div class="ui form">
+        <div class="inline fields">
+            <div class="field">
+                <div class="ui toggle checkbox">
+                    <input type="checkbox" id="showWidgetChart"
+                           data-ng-model="widgetData.chart.show">
+                    <label for="showWidgetChart" data-ng-show="widgetData.chart.show">Show chart of type:</label>
+                    <label for="showWidgetChart" data-ng-hide="widgetData.chart.show">Hide chart</label>
+                </div>
+                <label></label>
+            </div>
+            <div class="field" data-ng-show="widgetData.chart.show">
+                <div class="ui inline dropdown"
+                     data-ng-model="widgetData.chart.type">
+                    <div class="default text">Doughnut</div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <div class="item" data-value="doughnut"><i class="basic pie chart icon"></i> Doughnut</div>
+                        <div class="item" data-value="line"><i class="basic chart icon"></i> Line</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui segment" data-ng-show="widgetData.chart.show">
+        <div class="ui top green right small attached label">
+            <div class="ui green mini icon button" data-ng-class="{disabled: cantAddMoreChartMappings()}"
+                 data-ng-click="addNewChartMapping()">
+                <i class="add icon"></i>
+            </div>
+        </div>
+
+        <div class="ui top left attached label">Chart series</div>
+
+        <table class="ui basic table segment">
+            <thead data-ng-show="widgetData.chart.mappings.length > 0">
+            <tr>
+                <th class="five wide">Response property</th>
+                <th class="ten wide">Chart label</th>
+                <th class="one wide"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="chartMapping in widgetData.chart.mappings">
+                <td>
+                    <div class="ui fluid mini input">
+                        <input type="text" data-ng-model="chartMapping.property">
+                    </div>
+                </td>
+                <td>
+                    <div class="ui fluid mini input">
+                        <input type="text" data-ng-model="chartMapping.label">
+                    </div>
+                </td>
+                <td>
+                    <div class="ui negative mini icon button" data-ng-click="removeChartMapping($index)"><i
+                            class="remove icon"></i>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="ui segment" data-ng-show="widgetData.chart.show && widgetData.chart.type === 'line'">
+        <div class="ui top attached label">Line chart settings</div>
+
+        <div class="ui form">
+            <div class="inline fields">
+                <div class="sixteen wide field">
+                    <label>Samples count:</label>
+
+                    <input type="number" min="3" max="1000"
+                           data-ng-model="widgetData.chart.timeSeriesSamples">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="actions">

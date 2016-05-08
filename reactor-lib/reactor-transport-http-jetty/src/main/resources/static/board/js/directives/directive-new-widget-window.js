@@ -7,6 +7,7 @@ var NewWidgetWindowController = function($scope, $widgetPopupService, $widgetsSe
     $scope.emptyForm = function() {
         $scope.widgetData = {
             visual: {
+                showContent: true,
                 title: '',
                 fontSize: '',
                 colorSettings: {
@@ -30,8 +31,12 @@ var NewWidgetWindowController = function($scope, $widgetPopupService, $widgetsSe
             },
             chart: {
                 show: false,
-                type: "GAUGE", // "GAUGE", "TIME_SERIES"
-                timeSeriesSamples: 10
+                type: 'doughnut', // "doughnut", "line"
+                timeSeriesSamples: 10,
+                mappings: [{
+                    property: '',
+                    label: ''
+                }]
             },
             layout: {
                 column: 0,
@@ -58,6 +63,25 @@ var NewWidgetWindowController = function($scope, $widgetPopupService, $widgetsSe
         }
         $widgetsService.updateWidget($scope.widgetData);
     };
+
+    $scope.addNewChartMapping = function() {
+        if ($scope.cantAddMoreChartMappings()) {
+            return;
+        }
+        $scope.widgetData.chart.mappings.push({
+            property: '',
+            label: ''
+        });
+    };
+
+    $scope.cantAddMoreChartMappings = function() {
+        return $scope.widgetData.chart.mappings.length > 2;
+    };
+
+    $scope.removeChartMapping = function($mappingIndex) {
+        console.log($mappingIndex);
+        $scope.widgetData.chart.mappings.splice($mappingIndex, 1);
+    }
 
     var initNewWidgetWindowListener = function($scope, $widgetPopupService) {
         $widgetPopupService.setNewWidgetListener(function() {
@@ -86,6 +110,7 @@ var NewWidgetWindowController = function($scope, $widgetPopupService, $widgetsSe
 var NewWidgetWindowLinker = function($scope, $element, $attrs) {
     var initPopup = function($scope, $element) {
         $scope.popup = $($element).modal({
+            closable: false,
             onApprove: function() {
                 $($element).form('validate form');
                 if ($scope.hasErrors) {

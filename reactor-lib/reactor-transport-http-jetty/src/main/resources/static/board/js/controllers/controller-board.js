@@ -1,4 +1,4 @@
-var ReactorBoardController = function($scope, $widgetsService) {
+var ReactorBoardController = function($scope, $widgetsService, $widgetsChartsService) {
 
 	$scope.gristerOptions = {
         columns: 12,
@@ -9,6 +9,10 @@ var ReactorBoardController = function($scope, $widgetsService) {
 		rowHeight: 110,
 		defaultSizeX: 1,
         defaultSizeY: 1
+    };
+
+    $scope.handleWidgetResized = function(event, $element, widget) {
+        $widgetsChartsService.refreshWidgetChart(widget.data().widgetId);
     };
 
     $scope.widgetLayoutMap = {
@@ -74,4 +78,4 @@ var ReactorBoardController = function($scope, $widgetsService) {
     initWidgetRemovedListener($scope, $widgetsService);
 };
 
-app.controller("ReactorBoardController", ReactorBoardController);
+app.controller('ReactorBoardController', ReactorBoardController);

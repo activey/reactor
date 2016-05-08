@@ -15,7 +15,7 @@
 
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/detect-element-resize.js"></script>
-    <script src="js/angular-gridster.js"></script>
+    <script src="js/angular-gridster.min.js"></script>
     
     <script src="js/semantic.form.rules.js"></script>
 
@@ -26,12 +26,15 @@
     <script src="js/services/service-sidebar.js"></script>
     <script src="js/services/service-widget-popup.js"></script>
     <script src="js/services/service-widget-content-refresh.js"></script>
-    <script src="js/services/service-widgets-charts.js"></script>
+    <script src="js/services/widget-chart-handler.js"></script>
 
-    
+    <script src="js/services/service-widgets-charts.js"></script>
+    <script src="js/chartist.min.js"></script>
+
     <script src="js/controllers/controller-board.js"></script>
 
     <script src="js/directives/directive-widget.js"></script>
+    <script src="js/directives/directive-widget-chart.js"></script>
     <script src="js/directives/directive-sidebar.js"></script>
     <script src="js/directives/directive-sidebar-button.js"></script>
     <script src="js/directives/directive-new-widget-button.js"></script>
@@ -46,7 +49,9 @@
     <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="css/angular-gridster.min.css">
     <link rel="stylesheet" type="text/css" href="css/csshake.min.css">
+    <link rel="stylesheet" type="text/css" href="css/chartist.min.css">
     <link rel="stylesheet" type="text/css" href="css/board.css">
+    <link rel="stylesheet" type="text/css" href="css/flex.css">
 </head>
 
 <body id="board">
@@ -68,7 +73,7 @@
         </div>
     </div>
 
-    <div class="ui fullscreen modal" data-widget-window></div>
+    <div class="ui large modal" data-widget-window></div>
 
     <div class="ui basic small modal" data-remove-widget-window></div>
 </body>

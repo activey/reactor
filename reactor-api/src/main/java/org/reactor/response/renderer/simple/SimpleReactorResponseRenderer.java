@@ -23,6 +23,15 @@ public class SimpleReactorResponseRenderer extends AbstractAutoFlushableResponse
 
     private String header;
     private Multimap<String, String> responseElements = LinkedListMultimap.create();
+    private boolean verbose;
+
+    public SimpleReactorResponseRenderer() {
+        this(false);
+    }
+
+    public SimpleReactorResponseRenderer(boolean verbose) {
+        this.verbose = verbose;
+    }
 
     @Override
     public void renderHeadLine(String headerTemplateToBeRendered, Object... templateParameters) {
@@ -85,6 +94,12 @@ public class SimpleReactorResponseRenderer extends AbstractAutoFlushableResponse
         if (!isNullOrEmpty(header)) {
             printWriter.print(header);
         }
-        responseElements.values().forEach(printWriter::print);
+        responseElements.entries().forEach(responseElement -> {
+           if (!verbose) {
+               printWriter.print(responseElement.getValue());
+               return;
+           }
+           printWriter.print(format("%s = %s", responseElement.getKey(), responseElement.getValue()));
+        });
     }
 }
