@@ -34,6 +34,10 @@ var WidgetController = function($scope, $widgetPopupService, $widgetContentRefre
     };
 
     var evalWidgetDynamicColor = function($scope) {
+        if ($scope.widgetContent.response.length === 0) {
+            return;
+        }
+
         // creating local variables for each response line
         for (var $lineIndex in $scope.widgetContent.response) {
             var responseLine = $scope.widgetContent.response[$lineIndex];

@@ -85,10 +85,21 @@ var DoughnutChartHandlerFactory = function() {
 
         this.chart = {};
         this.chartData = {
+            labels: [],
             series: []
         };
 
+        var initializeChartLabels = function($chartSettings) {
+            var labels = [];
+            $chartSettings.mappings.forEach(function($chartMapping) {
+                labels.push($chartMapping.label);
+            });
+            return labels;
+        };
+
         this.initializeChart = function($chartContainer, $chartSettings) {
+            this.chartData.labels = initializeChartLabels($chartSettings);
+
             this.chart = new Chartist.Pie($chartContainer, this.chartData, {
                 donut: true,
                 donutWidth: 80,
@@ -104,6 +115,7 @@ var DoughnutChartHandlerFactory = function() {
             this.chartData.series = $chartData;
             this.chart.update(this.chartData);
         };
+
     };
 
     return {
