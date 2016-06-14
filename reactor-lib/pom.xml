@@ -76,6 +76,7 @@
                 <module>reactor-sonar</module>
                 <module>reactor-system</module>
                 <module>reactor-database</module>
+                <module>reactor-spring-actuator</module>
                 <module>reactor-transport-directinput</module>
                 <module>reactor-transport-http-jetty</module>
                 <module>reactor-transport-irc</module>

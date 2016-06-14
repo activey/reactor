@@ -1,6 +1,6 @@
 var ReactorBoardController = function($scope, $widgetsService, $widgetsChartsService) {
 
-	$scope.gristerOptions = {
+	$scope.gridsterOptions = {
         columns: 12,
         margins: [15, 15],
         pushing: true,
