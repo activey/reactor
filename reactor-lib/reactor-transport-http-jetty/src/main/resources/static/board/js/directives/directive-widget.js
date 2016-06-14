@@ -1,6 +1,8 @@
-var WidgetController = function($scope, $widgetPopupService, $widgetContentRefreshService) {
+var WidgetController = function($scope, $widgetPopupService, $widgetContentRefreshService, $widgetsChartsService) {
     
-    $scope.widgetContent = "";
+    $scope.widgetContent = {
+        response: []
+    };
     $scope.processing = true;
     $scope.error = false;
 
@@ -19,7 +21,7 @@ var WidgetController = function($scope, $widgetPopupService, $widgetContentRefre
     $scope.getWidgetDecoration = function() {
         var decoration = $scope.widget.visual.colorSettings.staticModel.color;
         if ($scope.widget.visual.colorSettings.dynamic) {
-            decoration = evalWidgetDynamicColor();
+            decoration = evalWidgetDynamicColor($scope);
         }
         if ($scope.widget.visual.colorSettings.inverted === true) {
             decoration = decoration + ' inverted';
@@ -31,10 +33,18 @@ var WidgetController = function($scope, $widgetPopupService, $widgetContentRefre
         return decoration;
     };
 
-    var evalWidgetDynamicColor = function() {
-        var response = $scope.widgetContent;
-        var widgetDynamicColorModel = $scope.widget.visual.colorSettings.dynamicModel;
+    var evalWidgetDynamicColor = function($scope) {
+        if ($scope.widgetContent.response.length === 0) {
+            return;
+        }
 
+        // creating local variables for each response line
+        for (var $lineIndex in $scope.widgetContent.response) {
+            var responseLine = $scope.widgetContent.response[$lineIndex];
+            eval('var ' + responseLine.id + ' = ' + responseLine.value + ';');
+        }
+
+        var widgetDynamicColorModel = $scope.widget.visual.colorSettings.dynamicModel;
         switch (true) {
             case eval(widgetDynamicColorModel.blue): return 'blue';
             case eval(widgetDynamicColorModel.orange): return 'orange';
@@ -45,7 +55,7 @@ var WidgetController = function($scope, $widgetPopupService, $widgetContentRefre
         }
     }
 
-    var bindContentRefreshEvents = function($scope) {
+    var bindWidgetContentChangeListener = function($scope) {
         $widgetContentRefreshService.addDataRefreshListener($scope.widget, {
             onDataRefreshStarted: function() {
                 $scope.$apply(function() {
@@ -54,15 +64,34 @@ var WidgetController = function($scope, $widgetPopupService, $widgetContentRefre
             },
             onDataRefreshFinished: function($widgetData) {
                 $scope.widgetContent = $widgetData;
-                $scope.processing = false;
                 $scope.error = false;
+
+                $scope.processing = false;
             },
             onDataRefreshFailed: function() {
                 $scope.error = true;
             }
         });
     };
-    bindContentRefreshEvents($scope);
+
+    var bindWidgetChartValueUpdateListener = function($scope) {
+        $scope.$watch('widgetContent', function($newWidgetContent, bleble){
+            $widgetsChartsService.updateWidgetData($scope.widget.id, $newWidgetContent, $scope.widget.chart);
+        }, true);
+    };
+
+    var bindWidgetResizeListeners = function($scope) {
+        $scope.$on('gridster-item-transition-end', function(item) {
+            $widgetsChartsService.refreshWidgetChart($scope.widget.id);
+        });
+        $scope.$on('gridster-item-resized', function(item) {
+            $widgetsChartsService.refreshWidgetChart($scope.widget.id);
+        });
+    };
+
+    bindWidgetContentChangeListener($scope);
+    bindWidgetChartValueUpdateListener($scope);
+    bindWidgetResizeListeners($scope);
 };
 
 var WidgetLinker = function($scope, $element, $attrs) {

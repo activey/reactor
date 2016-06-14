@@ -1,6 +1,6 @@
 var WidgetsService = function($widgetsStorageService) {
 
-    this.onWidgetAddedCallback = {};
+    this.onWidgetAddedCallbacks = [];
     this.onWidgetRemovedCallbacks = [];
     this.onWidgetChangedCallbacks = [];
 
@@ -22,10 +22,10 @@ var WidgetsService = function($widgetsStorageService) {
     };
     
     this.notifyWidgetAdded = function($newWidget) {
-        if (this.onWidgetAddedCallback === null) {
-            return;
+        for (var callbackIndex in this.onWidgetAddedCallbacks) {
+            var onWidgetAddedCallback = this.onWidgetAddedCallbacks[callbackIndex];
+            onWidgetAddedCallback($newWidget);
         }
-        this.onWidgetAddedCallback($newWidget);
     };
 
     this.notifyWidgetRemoved = function($removedWidget) {
@@ -37,17 +37,17 @@ var WidgetsService = function($widgetsStorageService) {
 
     this.notifyWidgetUpdated = function($updatedWidget) {
         for (var callbackIndex in this.onWidgetChangedCallbacks) {
-            var onWidgetLayoutChangedCallback = this.onWidgetChangedCallbacks[callbackIndex];
-            onWidgetLayoutChangedCallback($updatedWidget);
+            var onWidgetChangedCallback = this.onWidgetChangedCallbacks[callbackIndex];
+            onWidgetChangedCallback($updatedWidget);
         }
     };
 
-    this.onWidgetChanged =  function($onWidgetChangedListener) {
+    this.onWidgetChanged = function($onWidgetChangedListener) {
         this.onWidgetChangedCallbacks.push($onWidgetChangedListener);
     }
 
     this.onWidgetAdded = function($callback) {
-        this.onWidgetAddedCallback = $callback;
+        this.onWidgetAddedCallbacks.push($callback);
     };
 
     this.onWidgetRemoved = function($callback) {

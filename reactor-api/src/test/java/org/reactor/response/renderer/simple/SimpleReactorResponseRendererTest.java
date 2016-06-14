@@ -115,4 +115,23 @@ public class SimpleReactorResponseRendererTest extends AbstractUnitTest {
         verify(writer).write(Double.toString(DOUBLE_VALUE_2), 0, Double.toString(DOUBLE_VALUE_2).length());
     }
 
+    @Test
+    public void shouldPrintOutLineKeyWhenVerboseSetToTrue() {
+        // given
+        SimpleReactorResponseRenderer responseRenderer = new SimpleReactorResponseRenderer(true);
+
+        // when render lines
+        responseRenderer.renderLongLine(LONG_LINE_1, LONG_VALUE_1);
+        responseRenderer.renderTextLine(TEXT_LINE_1, TEXT_VALUE_1);
+        responseRenderer.renderDoubleLine(DOUBLE_LINE_1, DOUBLE_VALUE_1);
+
+        // and after commit to writer
+        StringWriter writer = spy(new StringWriter());
+        responseRenderer.commit(writer);
+
+        // then
+        verify(writer).write(format("%s = %s", LONG_LINE_1, LONG_VALUE_1), 0, format("%s = %s", LONG_LINE_1, LONG_VALUE_1).length());
+        verify(writer).write(format("%s = %s", TEXT_LINE_1, TEXT_VALUE_1), 0, format("%s = %s", TEXT_LINE_1, TEXT_VALUE_1).length());
+        verify(writer).write(format("%s = %s", DOUBLE_LINE_1, DOUBLE_VALUE_1), 0, format("%s = %s", DOUBLE_LINE_1, DOUBLE_VALUE_1).length());
+    }
 }

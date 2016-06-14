@@ -66,6 +66,10 @@ body {
   height: 100%;
 }
 
+#board .gridster-item-resizable-handler {
+    z-index: 1001;
+}
+
 /*-----------------------------
           Gridster
 -------------------------------*/
@@ -112,6 +116,14 @@ body {
           Widget visuals
 -------------------------------*/
 
+.widget-content {
+  position: absolute;
+  bottom: 0px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+}
+
 .widget-align-left .value {
     text-align: left !important;
 }
@@ -125,39 +137,39 @@ body {
 }
 
 .widget-font-default {
-  font-size: initial;
+  font-size: initial !important;
 }
 
 .widget-font-xx-small {
-  font-size: 30%;
+  font-size: 30% !important;
 }
 
 .widget-font-x-small {
-  font-size: 50%;
+  font-size: 50% !important;
 }
 
 .widget-font-smaller {
-  font-size: 70%;
+  font-size: 70% !important;
 }
 
 .widget-font-small {
-  font-size: 80%;
+  font-size: 80% !important;
 }
 
 .widget-font-large {
-  font-size: 200%;
+  font-size: 200% !important;
 }
 
 .widget-font-larger {
-  font-size: 300%;
+  font-size: 300% !important;
 }
 
 .widget-font-x-large {
-  font-size: 400%;
+  font-size: 400% !important;
 }
 
 .widget-font-xx-large {
-  font-size: 500%;
+  font-size: 500% !important;
 }
 
 .widget .ui.header {
@@ -169,6 +181,17 @@ body {
 -------------------------------*/
 
 .ui.segment.shadow {
- -webkit-box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.2) !important;
-  box-shadow: 0px 2px 3px 3px rgba(0, 0, 0, 0.2) !important;
+ -webkit-box-shadow: 0px 5px 10px rgba(0,0,0,0.8) !important;
+  box-shadow: 0px 5px 10px rgba(0,0,0,0.8) !important;
+}
+
+/*-----------------------------
+          Charts
+-------------------------------*/
+#widgetChartCanvasContainer {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
 }

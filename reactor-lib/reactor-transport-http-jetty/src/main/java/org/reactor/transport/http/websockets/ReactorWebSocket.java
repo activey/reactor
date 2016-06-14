@@ -1,6 +1,7 @@
 package org.reactor.transport.http.websockets;
 
 import static com.google.common.util.concurrent.Futures.addCallback;
+import static java.lang.String.format;
 import static org.reactor.transport.http.websockets.WebSocketResponseType.RESPONSE;
 
 import java.io.IOException;
@@ -21,10 +22,14 @@ public class ReactorWebSocket implements WebSocket.OnTextMessage {
 
     private static final String SENDER = "UNKNOWN";
     private static final String MESSAGE_INTERACTIVE_TOGGLE = "!interactive";
+    private static final String MESSAGE_VERBOSE_TOGGLE = "!verbose";
+    private static final String MESSAGE_TOGGLE_INTERACTIVE = "Turning %s interactive mode for session.";
+    private static final String MESSAGE_TOGGLE_VERBOSE = "Turning %s verbose mode for session.";
 
     private final ReactorRequestHandler requestHandler;
     private final WebSocketsConnectionListener connectionListener;
     private boolean interactive;
+    private boolean verbose;
 
     private Connection connection = null;
 
@@ -39,10 +44,14 @@ public class ReactorWebSocket implements WebSocket.OnTextMessage {
             toggleSessionInteractive();
             return;
         }
+        if (isVerboseToggleMessage(message)) {
+            toggleSessionVerbose();
+            return;
+        }
 
         ReactorRequestInput requestInput = new ReactorRequestInput(message);
         requestInput.setInteractive(interactive);
-        ReactorResponseRenderer responseRenderer = new SimpleReactorResponseRenderer();
+        ReactorResponseRenderer responseRenderer = new SimpleReactorResponseRenderer(verbose);
         addCallback(requestHandler.handleReactorRequest(requestInput, SENDER, responseRenderer), new FutureCallback<Object>() {
             @Override
             public void onSuccess(Object o) {
@@ -62,18 +71,35 @@ public class ReactorWebSocket implements WebSocket.OnTextMessage {
     }
 
     private void toggleSessionInteractive() {
-        Writer writer = new WebSocketResponseWriter(connection, RESPONSE);
-        try {
-            if (!interactive) {
-                writer.write("Turning ON interactive mode for session");
-            } else {
-                writer.write("Turning OFF interactive mode for session");
-            }
-            writer.flush();
-        } catch (IOException e) {
-            LOGGER.error("An error occurred while sending response");
+        if (!interactive) {
+            sendWebSocketText(MESSAGE_TOGGLE_INTERACTIVE, "ON");
+        } else {
+            sendWebSocketText(MESSAGE_TOGGLE_INTERACTIVE, "OFF");
         }
         interactive = !interactive;
+    }
+
+    private boolean isVerboseToggleMessage(String textMessage) {
+        return MESSAGE_VERBOSE_TOGGLE.equals(textMessage);
+    }
+
+    private void toggleSessionVerbose() {
+        if (!verbose) {
+            sendWebSocketText(MESSAGE_TOGGLE_VERBOSE, "ON");
+        } else {
+            sendWebSocketText(MESSAGE_TOGGLE_VERBOSE, "OFF");
+        }
+        verbose = !verbose;
+    }
+
+    private void sendWebSocketText(String textTemplate, String... parameters) {
+        Writer writer = new WebSocketResponseWriter(connection, RESPONSE);
+        try {
+            writer.write(format(textTemplate, parameters));
+            writer.flush();
+        } catch (IOException e) {
+            LOGGER.error("An error occurred while sending response.");
+        }
     }
 
     @Override

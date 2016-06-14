@@ -1,32 +1,40 @@
 <li data-widget-id="{{widget.id}}" class="ui no-margin widget segment dimmable ng-class:getWidgetDecoration()">
-	<div class="ui dimmer" data-ng-hide="processing">
-		<div class="content">
-			<div class="center">
-				<div class="ui circular icon positive button mini" data-ng-click="editWidget()">
-					<i class="setting icon"></i>
-				</div>
-				<div class="ui circular icon negative button mini" data-ng-click="removeWidget()">
-					<i class="remove icon"></i>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="ui dimmer" data-ng-hide="validateShowDimmer() && processing || error">
+        <div class="content">
+            <div class="center">
+                <div class="ui circular icon positive button mini" data-ng-click="editWidget()">
+                    <i class="setting icon"></i>
+                </div>
+                <div class="ui circular icon negative button mini" data-ng-click="removeWidget()">
+                    <i class="remove icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div class="ui active dimmer" data-ng-show="processing && validateShowDimmer()">
-		<div class="ui loader"></div>
-	</div>
+    <div class="ui active dimmer" data-ng-show="validateShowDimmer() && processing">
+        <div class="ui loader"></div>
+    </div>
 
-	<div class="ui active dimmer" data-ng-show="error">
-		<div class="content shake shake-constant">
-			<div class="center">
-				<i class="icon big bug"></i>
-			</div>
-		</div>
-	</div>
+    <div class="ui active dimmer" data-ng-show="error">
+        <div class="content shake shake-constant">
+            <div class="center">
+                <i class="icon big bug"></i>
+            </div>
+        </div>
+    </div>
 
-	<h4 class="ui dividing header">
-		{{widget.visual.title}}
-	</h4>
+    <div class="ui top left attached small label">
+        {{widget.visual.title}}
+    </div>
 
-	<div data-response-renderer="widgetContent" data-renderer-visual-config="widget.visual"></div>
+    <div id="widgetChartCanvasContainer">
+        <div class="fill-height">
+            <div class="ct-chart ct-major-twelfth" data-widget-chart data-widget-id="widget.id" data-widget-chart-settings="widget.chart">
+
+            </div>
+        </div>
+    </div>
+    <div data-ng-show="widget.visual.showContent" data-response-renderer="widgetContent" data-renderer-visual-config="widget.visual"
+         class="widget-content"></div>
 </li>

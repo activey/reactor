@@ -1,6 +1,7 @@
 package org.reactor.system.cpu;
 
 import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
 import java.lang.management.OperatingSystemMXBean;
 
 import org.reactor.AbstractAnnotatedReactor;
@@ -12,7 +13,10 @@ import org.reactor.response.ReactorResponse;
 public class CpuUsageReactor extends AbstractAnnotatedReactor<Void> {
 
     private final static OperatingSystemMXBean OS_BEAN = ManagementFactory
-        .getPlatformMXBean(OperatingSystemMXBean.class);
+            .getPlatformMXBean(OperatingSystemMXBean.class);
+
+
+    private final static MemoryMXBean MEMORY_BEAN = ManagementFactory.getPlatformMXBean(MemoryMXBean.class);
 
     public CpuUsageReactor() {
         super(Void.class);
@@ -20,6 +24,12 @@ public class CpuUsageReactor extends AbstractAnnotatedReactor<Void> {
 
     @Override
     protected ReactorResponse doReact(ReactorRequest<Void> reactorRequest) {
-        return responseRenderer -> responseRenderer.renderDoubleLine(OS_BEAN.getSystemLoadAverage());
+
+        return responseRenderer -> {
+            responseRenderer.renderTextLine("Memory usage");
+            responseRenderer.renderLongLine(MEMORY_BEAN.getHeapMemoryUsage().getUsed());
+            responseRenderer.renderTextLine("System load:");
+            responseRenderer.renderDoubleLine(OS_BEAN.getSystemLoadAverage());
+        };
     }
 }
