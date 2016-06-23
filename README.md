@@ -1,3 +1,5 @@
+[![Build Status](https://snap-ci.com/activey/reactor/branch/master/build_image)](https://snap-ci.com/activey/reactor/branch/master)
+
 # Table of Contents
 - [Reactor](#reactor)
     - [Architecture overview](#architecture-overview)
@@ -150,8 +152,6 @@ There are two configuration files provided for all message transports and reacto
 - transport.properties - 
 
 :hourglass: **IN PROGRESS**
-
-[![Build Status](https://snap-ci.com/FutureProcessing/reactor/branch/master/build_image)](https://snap-ci.com/activey/reactor/branch/master)
 
 [Reactor]: https://github.com/FutureProcessing/reactor/blob/master/reactor-api/src/main/java/org/reactor/Reactor.java
 [ReactorRequestInput]: https://github.com/FutureProcessing/reactor/blob/master/reactor-api/src/main/java/org/reactor/request/ReactorRequestInput.java
