@@ -63,26 +63,81 @@
             </build>
         </profile>
         <profile>
-            <id>build-provided-modules</id>
-            <activation>
-                <property>
-                    <name>providedModules</name>
-                    <value>true</value>
-                </property>
-            </activation>
+            <id>reactor-jenkins</id>
             <modules>
                 <module>reactor-jenkins</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>reactor-jira</id>
+            <modules>
                 <module>reactor-jira</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>reactor-sonar</id>
+            <modules>
                 <module>reactor-sonar</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>reactor-system</id>
+            <modules>
                 <module>reactor-system</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>reactor-database</id>
+            <modules>
                 <module>reactor-database</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>reactor-spring-actuator</id>
+            <modules>
                 <module>reactor-spring-actuator</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>reactor-transport-directinput</id>
+            <modules>
                 <module>reactor-transport-directinput</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>reactor-transport-http-jetty</id>
+            <modules>
                 <module>reactor-transport-http-jetty</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>reactor-transport-irc</id>
+            <modules>
                 <module>reactor-transport-irc</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>reactor-transport-skype</id>
+            <modules>
                 <module>reactor-transport-skype</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>reactor-transport-speech</id>
+            <modules>
                 <module>reactor-transport-speech</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>reactor-transport-telnet</id>
+            <modules>
                 <module>reactor-transport-telnet</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>reactor-transport-elastic-push</id>
+            <modules>
                 <module>reactor-transport-elastic-push</module>
             </modules>
         </profile>

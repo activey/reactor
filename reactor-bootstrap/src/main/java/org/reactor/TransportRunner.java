@@ -1,6 +1,10 @@
 package org.reactor;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.reactor.properties.PropertiesLoader.propertiesLoader;
+
+import com.google.common.base.Stopwatch;
 import org.reactor.event.DefaultReactorEventConsumerFactory;
 import org.reactor.reactor.ReactorController;
 import org.reactor.transport.DefaultReactorRequestHandler;
@@ -8,6 +12,8 @@ import org.reactor.transport.TransportController;
 import org.reactor.transport.TransportProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.TimeUnit;
 
 public final class TransportRunner {
 
@@ -43,6 +49,9 @@ public final class TransportRunner {
     }
 
     public static void main(String[] args) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
         new TransportRunner().start();
+        long startupTimeInSeconds = stopwatch.elapsed(MILLISECONDS);
+        LOG.debug("Started in: {} ms.", startupTimeInSeconds);
     }
 }

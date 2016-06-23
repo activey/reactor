@@ -6,6 +6,7 @@ import static org.reactor.renderer.ReactorResponseLineType.*;
 
 import java.io.Writer;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.reactor.response.list.ListElementFormatter;
@@ -13,15 +14,20 @@ import org.reactor.response.renderer.AbstractAutoFlushableResponseRenderer;
 
 public class JSONReactorResponseRenderer extends AbstractAutoFlushableResponseRenderer {
 
-    private static final String DEFAULT_PROPERTY_HEADER = "header";
+    @VisibleForTesting
+    static final String DEFAULT_PROPERTY_HEADER = "header";
     private static final String TEMPLATE_TEXT_LINE_ID = "text_%d";
     private static final String TEMPLATE_DOUBLE_LINE_ID = "double_%d";
     private static final String TEMPLATE_LONG_ID = "long_%d";
 
-    private static final String KEY_ID = "id";
-    private static final String KEY_TYPE = "type";
-    private static final String KEY_VALUE = "value";
-    private static final String KEY_RESPONSE = "response";
+    @VisibleForTesting
+    static final String KEY_ID = "id";
+    @VisibleForTesting
+    static final String KEY_TYPE = "type";
+    @VisibleForTesting
+    static final String KEY_VALUE = "value";
+    @VisibleForTesting
+    static final String KEY_RESPONSE = "response";
 
     private long generatedTextLinesCount = 0;
     private long generatedDoubleLinesCount = 0;
@@ -62,12 +68,13 @@ public class JSONReactorResponseRenderer extends AbstractAutoFlushableResponseRe
 
     @Override
     public <T> void renderListLine(String lineId, int index, T listElement, ListElementFormatter<T> formatter) {
-//        JSONArray jsonArray = new JSONArray();
-//        if (jsonObject.has(lineId)) {
-//            jsonArray = jsonObject.getJSONArray(lineId);
-//        }
-//        jsonArray.put(formatter.formatListElement(index, listElement));
-//        jsonObject.put(lineId, createResponseLineObject(DEFAULT_PROPERTY_HEADER, LINE, jsonArray));
+        // TODO rework it!
+        // JSONArray jsonArray = new JSONArray();
+        // if (jsonObject.has(lineId)) {
+        //     jsonArray = jsonObject.getJSONArray(lineId);
+        // }
+        // jsonArray.put(formatter.formatListElement(index, listElement));
+        // jsonObject.put(lineId, createResponseLineObject(DEFAULT_PROPERTY_HEADER, LINE, jsonArray));
     }
 
     @Override

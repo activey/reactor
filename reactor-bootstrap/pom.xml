@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>reactor-parent</artifactId>
         <groupId>org.reactor</groupId>
@@ -10,7 +10,7 @@
     <artifactId>reactor-bootstrap</artifactId>
 
     <properties>
-        <appassembler.version>1.3</appassembler.version>
+        <appassembler.version>1.10</appassembler.version>
     </properties>
 
     <build>
@@ -19,9 +19,6 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>appassembler-maven-plugin</artifactId>
                 <version>${appassembler.version}</version>
-                <configuration>
-                    <target>${project.build.directory}/target/dist</target>
-                </configuration>
                 <executions>
                     <execution>
                         <id>app-assemble</id>
@@ -29,65 +26,87 @@
                         <goals>
                             <goal>assemble</goal>
                         </goals>
-                        <configuration>
-                            <programs>
-                                <program>
-                                    <mainClass>org.reactor.ReactorRunner</mainClass>
-                                    <name>run-reactor</name>
-                                </program>
-                                <program>
-                                    <mainClass>org.reactor.TransportRunner</mainClass>
-                                    <name>run-transports</name>
-                                </program>
-                            </programs>
-                            <repositoryLayout>flat</repositoryLayout>
-                            <repositoryName>lib</repositoryName>
-                            <assembleDirectory>${project.build.directory}/dist</assembleDirectory>
-                            <platforms>
-                                <platform>unix</platform>
-                                <platform>windows</platform>
-                            </platforms>
-                            <copyConfigurationDirectory>true</copyConfigurationDirectory>
-                            <configurationDirectory>etc</configurationDirectory>
-                            <configurationSourceDirectory>${project.basedir}/src/main/resources</configurationSourceDirectory>
-                            <useWildcardClassPath>true</useWildcardClassPath>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <target>${project.build.directory}/target/dist</target>
+                    <programs>
+                        <program>
+                            <mainClass>org.reactor.ReactorRunner</mainClass>
+                            <id>run-reactor</id>
+                        </program>
+                        <program>
+                            <mainClass>org.reactor.TransportRunner</mainClass>
+                            <id>run-transports</id>
+                        </program>
+                    </programs>
+                    <repositoryLayout>flat</repositoryLayout>
+                    <repositoryName>lib</repositoryName>
+                    <assembleDirectory>${project.build.directory}/dist</assembleDirectory>
+                    <platforms>
+                        <platform>unix</platform>
+                        <platform>windows</platform>
+                    </platforms>
+                    <copyConfigurationDirectory>true</copyConfigurationDirectory>
+                    <configurationDirectory>etc</configurationDirectory>
+                    <configurationSourceDirectory>${project.basedir}/src/main/resources</configurationSourceDirectory>
+                    <useWildcardClassPath>true</useWildcardClassPath>
+                </configuration>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>org.reactor</groupId>
-            <artifactId>reactor-api</artifactId>
-        </dependency>
-
+        <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
         </dependency>
-
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.reactor</groupId>
-            <artifactId>travelling</artifactId>
-        </dependency>
-
+        <!-- Testing -->
         <dependency>
             <groupId>org.easytesting</groupId>
             <artifactId>fest-assert</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Internal dependencies -->
+        <dependency>
+            <groupId>org.reactor</groupId>
+            <artifactId>reactor-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.reactor</groupId>
+            <artifactId>travelling</artifactId>
+        </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>module-reactor-transport-http-jetty</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.reactor</groupId>
+                    <artifactId>reactor-transport-http-jetty</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>module-reactor-jenkins</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.reactor</groupId>
+                    <artifactId>reactor-jenkins</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>
