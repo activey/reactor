@@ -46,11 +46,7 @@ public class TransportController {
 
     public final void startTransports(TransportProperties transportProperties,
                                       ReactorRequestHandler messageTransportProcessor) {
-
-        transports.forEach(transport -> {
-            LOGGER.debug("Starting up transport: {}", transport.getClass().getName());
-            startTransport(transport, transportProperties, messageTransportProcessor);
-        });
+        transports.forEach(transport -> startTransport(transport, transportProperties, messageTransportProcessor));
         executorService.shutdown();
 
         new TransportsShutdownHook(this).initHook();
@@ -58,16 +54,19 @@ public class TransportController {
 
     private void startTransport(ReactorMessageTransport transport, TransportProperties transportProperties,
                                 ReactorRequestHandler messageTransportProcessor) {
+        LOGGER.debug("Starting up transport: {}", transport.getClass().getName());
         addCallback(executorService.submit(new TransportInitializationCallable(transport, transportProperties,
             messageTransportProcessor)), new TransportInitializationCallback(transport));
     }
 
     public final void stopTransports() {
-        transports.forEach(transport -> {
-            LOGGER.debug("Shutting down transport: {}", transport.getClass().getName());
-            transport.stopTransport();
-            LOGGER.debug("Transport stopped: {}", transport.getClass().getName());
-        });
+        transports.forEach(this::stopTransport);
+    }
+
+    private void stopTransport(ReactorMessageTransport transport) {
+        LOGGER.debug("Shutting down transport: {}", transport.getClass().getName());
+        transport.stopTransport();
+        LOGGER.debug("Transport stopped: {}", transport.getClass().getName());
     }
 
     public void broadcast(ReactorResponse reactorResponse) {
