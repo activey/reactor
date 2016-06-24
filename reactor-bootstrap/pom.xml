@@ -53,6 +53,24 @@
                     <useWildcardClassPath>true</useWildcardClassPath>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.5.2</version>
+                <configuration>
+                    <descriptor>src/assembly/assembly.xml</descriptor>
+                    <finalName>reactor-${project.version}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-archive</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

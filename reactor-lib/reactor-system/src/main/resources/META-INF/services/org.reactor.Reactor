@@ -1,3 +1,4 @@
 org.reactor.system.FilesystemReactor
 org.reactor.system.process.RunProcessReactor
-org.reactor.system.cpu.CpuUsageReactor
+org.reactor.system.system.CpuUsageReactor
+org.reactor.system.system.MemoryUsageReactor

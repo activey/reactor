@@ -169,9 +169,9 @@
     <modules>
         <module>reactor-commons</module>
         <module>reactor-api</module>
-        <module>reactor-bootstrap</module>
         <module>reactor-lib</module>
         <module>reactor-renderer-json</module>
+        <module>reactor-bootstrap</module>
         <module>travelling</module>
     </modules>
 </project>
