@@ -17,6 +17,14 @@ var LineChartHandlerFactory = function() {
             return labels;
         };
 
+        var initializeSeriesLabels = function($chartSettings) {
+            var labels = [];
+            $chartSettings.mappings.forEach(function($chartMapping) {
+                labels.push($chartMapping.label);
+            });
+            return labels;
+        };
+
         this.initializeChart = function($chartContainer, $chartSettings) {
             this.chartData.labels = initializeChartLabels($chartSettings);
 
@@ -36,7 +44,12 @@ var LineChartHandlerFactory = function() {
                     showGrid: false,
                     showLabel: false,
                     offset: 0
-                }
+                },
+                plugins: [
+                    Chartist.plugins.lineChartLabels({
+                        labels: initializeSeriesLabels($chartSettings)
+                    })
+                ]
             });
         };
 

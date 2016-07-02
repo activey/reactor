@@ -41,7 +41,11 @@ var WidgetController = function($scope, $widgetPopupService, $widgetContentRefre
         // creating local variables for each response line
         for (var $lineIndex in $scope.widgetContent.response) {
             var responseLine = $scope.widgetContent.response[$lineIndex];
-            eval('var ' + responseLine.id + ' = ' + responseLine.value + ';');
+            var responseLineValue = responseLine.value;
+            if (typeof responseLineValue === 'string') {
+                responseLineValue = '"' + responseLineValue + '"';
+            }
+            eval('var ' + responseLine.id + ' = ' + responseLineValue + ';');
         }
 
         var widgetDynamicColorModel = $scope.widget.visual.colorSettings.dynamicModel;
