@@ -13,11 +13,13 @@
 
     var findOrCreateDefsElement = function($svgRoot) {
         var defsElement = null;
-        $svgRoot._node.childNodes.forEach(function($childNode) {
-            if ($childNode.localName === 'defs') {
-                defsElement = $childNode;
+        for (var childIndex = 0; childIndex < $svgRoot._node.childNodes.length; childIndex++) {
+            var childNode = $svgRoot._node.childNodes[childIndex];
+            if (childNode.localName === 'defs') {
+                defsElement = childNode;
+                break;
             }
-        });
+        }
         if (defsElement) {
             return new Chartist.Svg(defsElement);
         }
