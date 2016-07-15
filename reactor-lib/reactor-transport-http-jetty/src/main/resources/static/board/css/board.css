@@ -115,6 +115,9 @@ body {
 /*-----------------------------
           Widget visuals
 -------------------------------*/
+.widget-label {
+    z-index: 100;
+}
 
 .widget-content {
   position: absolute;
@@ -188,7 +191,7 @@ body {
 /*-----------------------------
           Charts
 -------------------------------*/
-#widgetChartCanvasContainer {
+.widgetChartCanvasContainer {
     top: 0;
     left: 0;
     right: 0;
@@ -197,5 +200,13 @@ body {
 }
 
 .inverted .ct-label{
-    fill: white;
+    fill: rgba(255,255,255,0.8);
+}
+
+.inverted .ct-labels .ct-label{
+    color: rgba(255,255,255,0.3);
+}
+
+.inverted .ct-grid.ct-vertical {
+    stroke: rgba(255,255,255,0.3);
 }

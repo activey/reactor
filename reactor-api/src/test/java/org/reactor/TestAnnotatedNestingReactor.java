@@ -1,6 +1,7 @@
 package org.reactor;
 
 import static org.reactor.response.NoResponse.NO_RESPONSE;
+import static org.reactor.response.ReactorResponse.forString;
 
 import org.reactor.annotation.ReactOn;
 import org.reactor.data.ArgumentABCData;
@@ -27,7 +28,7 @@ public class TestAnnotatedNestingReactor extends AbstractNestingReactor {
 
     @ReactOn("manyArguments")
     public ReactorResponse manyArguments(ReactorRequest<ArgumentABCData> reactorRequest) {
-        return new StringReactorResponse(reactorRequest.getRequestData().getArgumentA() + " - "
+        return forString(reactorRequest.getRequestData().getArgumentA() + " - "
                 + reactorRequest.getRequestData().getArgumentB() + " - " + reactorRequest.getRequestData().getArgumentC());
     }
 

@@ -67,6 +67,8 @@
         <!-- Reactor modules -->
         <org.reactor.reactor-transport-http-jetty.version>0.0.1</org.reactor.reactor-transport-http-jetty.version>
         <org.reactor.reactor-jenkins.version>0.0.1</org.reactor.reactor-jenkins.version>
+        <org.reactor.reactor-system.version>0.0.1</org.reactor.reactor-system.version>
+        <org.reactor.reactor-tfs.version>0.0.1</org.reactor.reactor-tfs.version>
     </properties>
 
     <dependencyManagement>
@@ -162,6 +164,16 @@
                 <groupId>org.reactor</groupId>
                 <artifactId>reactor-jenkins</artifactId>
                 <version>${org.reactor.reactor-jenkins.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.reactor</groupId>
+                <artifactId>reactor-system</artifactId>
+                <version>${org.reactor.reactor-system.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.reactor</groupId>
+                <artifactId>reactor-tfs</artifactId>
+                <version>${org.reactor.reactor-tfs.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

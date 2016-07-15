@@ -64,6 +64,12 @@
             </build>
         </profile>
         <profile>
+            <id>reactor-tfs</id>
+            <modules>
+                <module>reactor-tfs</module>
+            </modules>
+        </profile>
+        <profile>
             <id>reactor-jenkins</id>
             <modules>
                 <module>reactor-jenkins</module>

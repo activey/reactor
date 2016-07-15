@@ -126,5 +126,23 @@
                 </dependency>
             </dependencies>
         </profile>
+        <profile>
+            <id>module-reactor-system</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.reactor</groupId>
+                    <artifactId>reactor-system</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>module-reactor-tfs</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.reactor</groupId>
+                    <artifactId>reactor-tfs</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
     </profiles>
 </project>

@@ -342,13 +342,35 @@
             <div class="inline fields">
                 <div class="sixteen wide field">
                     <label>Samples count:</label>
-
                     <input type="number" min="3" max="1000"
-                           data-ng-model="widgetData.chart.timeSeriesSamples">
+                           data-ng-model="widgetData.chart.line.samples">
+                </div>
+            </div>
+            <div class="inline fields">
+                <div class="ui field">
+                    <div class="ui toggle checkbox">
+                        <input type="checkbox" id="lineChartShowScale"
+                               data-ng-model="widgetData.chart.line.showScale">
+                        <label for="lineChartShowScale" data-ng-show="widgetData.chart.line.showScale">Show
+                            scale</label>
+                        <label for="lineChartShowScale" data-ng-hide="widgetData.chart.line.showScale">Hide
+                            scale</label>
+                    </div>
+                    <label></label>
+                </div>
+                <div class="ui field">
+                    <div class="ui toggle checkbox">
+                        <input type="checkbox" id="lineChartShowGrid"
+                               data-ng-model="widgetData.chart.line.showGrid">
+                        <label for="lineChartShowGrid" data-ng-show="widgetData.chart.line.showGrid">Show grid</label>
+                        <label for="lineChartShowGrid" data-ng-hide="widgetData.chart.line.showGrid">Hide grid</label>
+                    </div>
+                    <label></label>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <div class="actions">

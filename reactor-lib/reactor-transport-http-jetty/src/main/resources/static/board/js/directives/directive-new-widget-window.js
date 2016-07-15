@@ -32,7 +32,11 @@ var NewWidgetWindowController = function($scope, $widgetPopupService, $widgetsSe
             chart: {
                 show: false,
                 type: 'doughnut', // "doughnut", "line"
-                timeSeriesSamples: 10,
+                line: {
+                    samples: 10,
+                    showScale: true,
+                    showGrid: false
+                },
                 mappings: [{
                     property: '',
                     label: ''
