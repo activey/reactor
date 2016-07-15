@@ -2,6 +2,7 @@
     'use strict';
 
     var defaultOptions = {
+        chartId: 'line-chart',
         labels: [],
         labelClass: 'ct-label',
         labelOffset: {
@@ -36,10 +37,11 @@
 
     Chartist.plugins = Chartist.plugins || {};
     Chartist.plugins.lineChartLabels = function(options) {
-
         options = Chartist.extend({}, defaultOptions, options);
 
-        return function ctPointLabels(chart) {
+        return function lineChartLabels(chart) {
+            options.chartId = chart.container.id || options.chartId;
+
             if (chart instanceof Chartist.Line) {
                 chart.on('draw', function(data) {
                     if (data.type !== 'line') {
@@ -52,7 +54,7 @@
                     var definitionsElement = findOrCreateDefsElement(data.element.root());
                     var pathDefinitionElement = definitionsElement.elem('path');
                     pathDefinitionElement.attr({
-                        id: 'series_path_' + data.seriesIndex,
+                        id: options.chartId + '_series_path_' + data.seriesIndex,
                         d: data.element.attr('d')
                     });
 
@@ -60,7 +62,7 @@
                         x: options.labelOffset.x,
                         'word-spacing': options.labelSpacing
                     }, options.labelClass).elem('textPath', {
-                        'xlink:href': '#series_path_' + data.seriesIndex
+                        'xlink:href': '#' + options.chartId + '_series_path_' + data.seriesIndex
                     }).elem('tspan', {
                         dy: options.labelOffset.y
                     }).text(generateSeriesLabel(options.labels[data.seriesIndex]));

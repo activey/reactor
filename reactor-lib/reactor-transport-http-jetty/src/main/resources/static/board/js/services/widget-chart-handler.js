@@ -11,7 +11,7 @@ var LineChartHandlerFactory = function() {
 
         var initializeChartLabels = function($chartSettings) {
             var labels = [];
-            for (var labelIndex = 0; labelIndex < $chartSettings.timeSeriesSamples - 1; labelIndex++) {
+            for (var labelIndex = 0; labelIndex < $chartSettings.line.samples - 1; labelIndex++) {
                 labels.push(labelIndex + 1);
             }
             return labels;
@@ -41,9 +41,9 @@ var LineChartHandlerFactory = function() {
                     offset: 0
                 },
                 axisY: {
-                    showGrid: false,
-                    showLabel: false,
-                    offset: 0
+                    showGrid: $chartSettings.line.showGrid,
+                    showLabel: $chartSettings.line.showScale,
+                    offset: $chartSettings.line.showScale ? 50 : 0
                 },
                 plugins: [
                     Chartist.plugins.lineChartLabels({
@@ -74,7 +74,7 @@ var LineChartHandlerFactory = function() {
             for (var index = 0; index < $chartData.length; index++) {
                 this.chartData.series[index].push($chartData[index]);
 
-                if (this.chartData.series[index].length >= $chartSettings.timeSeriesSamples) {
+                if (this.chartData.series[index].length >= $chartSettings.line.samples) {
                     this.chartData.series[index].splice(0, 1);
                 }
             }

@@ -24,15 +24,13 @@
         </div>
     </div>
 
-    <div class="ui top left attached small label">
+    <div class="ui top left attached small label widget-label">
         {{widget.visual.title}}
     </div>
 
-    <div id="widgetChartCanvasContainer">
-        <div class="fill-height">
-            <div class="ct-chart ct-major-twelfth" data-widget-chart data-widget-id="widget.id" data-widget-chart-settings="widget.chart">
+    <div class="widgetChartCanvasContainer">
+        <div id="widget-{{widget.id}}" class="ct-chart fill-height" data-widget-chart data-widget-id="widget.id" data-widget-chart-settings="widget.chart">
 
-            </div>
         </div>
     </div>
     <div data-ng-show="widget.visual.showContent" data-response-renderer="widgetContent" data-renderer-visual-config="widget.visual"

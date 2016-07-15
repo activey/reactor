@@ -69,19 +69,14 @@ var WidgetController = function($scope, $widgetPopupService, $widgetContentRefre
             onDataRefreshFinished: function($widgetData) {
                 $scope.widgetContent = $widgetData;
                 $scope.error = false;
-
                 $scope.processing = false;
+
+                $widgetsChartsService.updateWidgetData($scope.widget.id, $widgetData, $scope.widget.chart);
             },
             onDataRefreshFailed: function() {
                 $scope.error = true;
             }
         });
-    };
-
-    var bindWidgetChartValueUpdateListener = function($scope) {
-        $scope.$watch('widgetContent', function($newWidgetContent, bleble){
-            $widgetsChartsService.updateWidgetData($scope.widget.id, $newWidgetContent, $scope.widget.chart);
-        }, true);
     };
 
     var bindWidgetResizeListeners = function($scope) {
@@ -94,7 +89,6 @@ var WidgetController = function($scope, $widgetPopupService, $widgetContentRefre
     };
 
     bindWidgetContentChangeListener($scope);
-    bindWidgetChartValueUpdateListener($scope);
     bindWidgetResizeListeners($scope);
 };
 
